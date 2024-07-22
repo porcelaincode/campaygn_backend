@@ -10,6 +10,12 @@ services:
       - '27017:27017'
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          memory: 300m
+        reservations:
+          memory: 200m
 
   elasticsearch:
     build:
@@ -23,18 +29,12 @@ services:
       - '9300:9300'
     networks:
       - backend
-
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:8.8.0
-  #   container_name: kibana
-  #   environment:
-  #     - ELASTICSEARCH_URL=http://elasticsearch:9200
-  #   ports:
-  #     - '5601:5601'
-  #   depends_on:
-  #     - elasticsearch
-  #   networks:
-  #     - backend
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+        reservations:
+          memory: 400m
 
   app:
     build:
@@ -42,12 +42,18 @@ services:
       dockerfile: Dockerfile.node
     container_name: app
     ports:
-      - '3000:3000'
+      - '8000:8000'
     depends_on:
       - mongo
       - elasticsearch
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          memory: 200m
+        reservations:
+          memory: 100m
 
 networks:
   backend:
