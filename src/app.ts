@@ -31,8 +31,8 @@ app.use(
 
 app.use(requestLogger);
 
-app.use('/api/auth', authRoutes);
-app.use('/api/influencers', influencerRoutes);
+app.use('/auth', authRoutes);
+app.use('/influencers', influencerRoutes);
 
 mongoose
   .connect(config.mongoURI)
